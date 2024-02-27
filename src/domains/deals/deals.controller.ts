@@ -23,7 +23,11 @@ export class DealsController {
 
   @Get(':dealId')
   getDeal(@Param('dealId', ParseIntPipe) dealId: number) {
-    return this.dealsService.getDeal(dealId);
+    const deal = this.dealsService.getDeal(dealId);
+
+    this.dealsService.incrementViews(dealId);
+
+    return deal;
   }
 
   @Post('create')

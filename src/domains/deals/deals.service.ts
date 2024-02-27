@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Deal, User } from '@prisma/client';
 import { PrismaService } from 'src/db/prisma/prisma.service';
 import { PostDealDTO } from './deals.dto';
 
@@ -20,6 +20,14 @@ export class DealsService {
       include: { _count: { select: { interested: true } } },
     });
 
+    return deal;
+  }
+
+  async incrementViews(dealId: number): Promise<Deal> {
+    const deal = await this.prismaService.deal.update({
+      where: { id: dealId },
+      data: { views: { increment: 1 } },
+    });
     return deal;
   }
 
