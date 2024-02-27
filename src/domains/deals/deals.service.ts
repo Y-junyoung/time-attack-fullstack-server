@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Deal, User } from '@prisma/client';
 import { PrismaService } from 'src/db/prisma/prisma.service';
-import { PostDealDTO } from './deals.dto';
+import { PostDealDTO, UpdateDealDTO } from './deals.dto';
 
 @Injectable()
 export class DealsService {
@@ -39,5 +39,25 @@ export class DealsService {
     });
 
     return deal;
+  }
+
+  async removeDeal(user: User, dealId: number) {
+    const { email } = user;
+    const removedDeal = await this.prismaService.deal.delete({
+      where: { id: dealId, sellerId: email },
+    });
+
+    return removedDeal;
+  }
+
+  async updateDeal(user: User, dealId: number, dto: UpdateDealDTO) {
+    const { title, content, location, price } = dto;
+    const { email } = user;
+    const UpdatedDeal = await this.prismaService.deal.update({
+      where: { id: dealId, sellerId: email },
+      data: { title, content, location, price, sellerId: email },
+    });
+
+    return UpdatedDeal;
   }
 }

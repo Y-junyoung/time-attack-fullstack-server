@@ -12,3 +12,5 @@ export type PostDealDTO = {
   updatedAt?: string | Date;
   interested?: Prisma.InterestUncheckedCreateNestedManyWithoutDealInput;
 };
+
+export type UpdateDealDTO = PostDealDTO;
