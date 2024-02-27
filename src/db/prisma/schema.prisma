@@ -16,7 +16,6 @@ datasource db {
 model User {
   id                Int          @id @default(autoincrement())
   email             String       @unique
-  isEmailVerified   Boolean      @default(false)
   encryptedPassword String
   profile           UserProfile?
   createdAt         DateTime     @default(now())
@@ -38,7 +37,7 @@ model Deal {
   content    String
   location   String
   price      Int
-  imgSrc     String
+  imgSrc     String?
   seller     User       @relation("myDeals", fields: [sellerId], references: [email])
   sellerId   String
   interested Interest[]

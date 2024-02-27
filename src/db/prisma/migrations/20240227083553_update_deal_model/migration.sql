@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Deal" ALTER COLUMN "imgSrc" DROP NOT NULL;
