@@ -19,41 +19,41 @@ export class DealsController {
   constructor(private readonly dealsService: DealsService) {}
 
   @Get()
-  getDeals() {
-    return this.dealsService.getDeals();
+  async getDeals() {
+    return await this.dealsService.getDeals();
   }
 
   @Get(':dealId')
-  getDeal(@Param('dealId', ParseIntPipe) dealId: number) {
-    const deal = this.dealsService.getDeal(dealId);
+  async getDeal(@Param('dealId', ParseIntPipe) dealId: number) {
+    const deal = await this.dealsService.getDeal(dealId);
 
-    this.dealsService.incrementViews(dealId);
+    await this.dealsService.incrementViews(dealId);
 
     return deal;
   }
 
   @Post('create')
   @LoggedInOnly()
-  postDeal(@DUser() user: User, @Body() dto: PostDealDTO) {
-    return this.dealsService.postDeal(dto, user);
+  async postDeal(@DUser() user: User, @Body() dto: PostDealDTO) {
+    return await this.dealsService.postDeal(dto, user);
   }
 
   @Delete(':dealId')
   @LoggedInOnly()
-  removeDeal(
+  async removeDeal(
     @DUser() user: User,
     @Param('dealId', ParseIntPipe) dealId: number,
   ) {
-    return this.dealsService.removeDeal(user, dealId);
+    return await this.dealsService.removeDeal(user, dealId);
   }
 
   @Patch(':dealId')
   @LoggedInOnly()
-  updateDeal(
+  async updateDeal(
     @DUser() user: User,
     @Param('dealId', ParseIntPipe) dealId: number,
     @Body() dto: UpdateDealDTO,
   ) {
-    return this.dealsService.updateDeal(user, dealId, dto);
+    return await this.dealsService.updateDeal(user, dealId, dto);
   }
 }

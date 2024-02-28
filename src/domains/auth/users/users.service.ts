@@ -49,6 +49,26 @@ export class UsersService {
     return accessToken;
   }
 
+  async getWrittenDeal(user: User) {
+    const { email } = user;
+    const writtenDeals = await this.prismaService.user.findMany({
+      where: { email },
+      select: { myDeals: true },
+    });
+
+    return writtenDeals;
+  }
+
+  async getInterests(user: User) {
+    const { email } = user;
+    const interestDeals = await this.prismaService.user.findMany({
+      where: { email },
+      select: { interests: { select: { interestedDeals: true } } },
+    });
+
+    return interestDeals;
+  }
+
   generateAccessToken(user: Pick<User, 'email'>) {
     const { email } = user;
     const secretKey = this.configService.getOrThrow<string>('JWT_SECRET_KEY');

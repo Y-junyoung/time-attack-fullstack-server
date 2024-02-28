@@ -10,7 +10,7 @@ export type PostDealDTO = {
   sellerId: string;
   createdAt?: string | Date;
   updatedAt?: string | Date;
-  interested?: Prisma.InterestUncheckedCreateNestedManyWithoutDealInput;
+  interested?: Prisma.InterestedDealUncheckedCreateNestedManyWithoutDealInput;
 };
 
 export type UpdateDealDTO = PostDealDTO;

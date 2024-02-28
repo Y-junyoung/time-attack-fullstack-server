@@ -18,9 +18,9 @@ model User {
   email             String       @unique
   encryptedPassword String
   profile           UserProfile?
-  createdAt         DateTime     @default(now())
   myDeals           Deal[]       @relation("myDeals")
-  interestDeals     Interest[]   @relation("interestDeals")
+  interests         Interest?
+  createdAt         DateTime     @default(now())
 }
 
 model UserProfile {
@@ -28,31 +28,39 @@ model UserProfile {
   user        User     @relation(fields: [userId], references: [email])
   nickname    String
   phoneNumber String?
+  createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
 model Deal {
-  id         Int        @id @default(autoincrement())
+  id         Int              @id @default(autoincrement())
   title      String
   content    String
   location   String
   price      Int
   imgSrc     String?
-  seller     User       @relation("myDeals", fields: [sellerId], references: [email])
+  seller     User             @relation("myDeals", fields: [sellerId], references: [email])
   sellerId   String
-  interested Interest[]
-  views      Int        @default(0)
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  interested InterestedDeal[]
+  views      Int              @default(0)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
 }
 
 model Interest {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation("interestDeals", fields: [userId], references: [email])
-  deal      Deal     @relation(fields: [dealId], references: [id])
-  userId    String
-  dealId    Int
-  createdAt DateTime @default(now())
+  userId          Int              @id
+  user            User             @relation(fields: [userId], references: [id])
+  interestedDeals InterestedDeal[]
+}
 
-  @@unique([userId, dealId])
+model InterestedDeal {
+  id         Int      @id @default(autoincrement())
+  interestId Int
+  interest   Interest @relation(fields: [interestId], references: [userId])
+  dealId     Int
+  deal       Deal     @relation(fields: [dealId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([interestId, dealId])
 }
