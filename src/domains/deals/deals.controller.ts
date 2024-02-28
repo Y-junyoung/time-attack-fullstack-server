@@ -5,8 +5,8 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { LoggedInOnly } from 'src/decorators/loggedInOnly.decorator';
@@ -47,7 +47,7 @@ export class DealsController {
     return await this.dealsService.removeDeal(user, dealId);
   }
 
-  @Patch(':dealId')
+  @Put(':dealId')
   @LoggedInOnly()
   async updateDeal(
     @DUser() user: User,

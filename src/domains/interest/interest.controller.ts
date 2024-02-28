@@ -8,7 +8,7 @@ import { InterestService } from './interest.service';
 export class InterestController {
   constructor(private readonly interestService: InterestService) {}
 
-  @Post('deal/:dealId')
+  @Post('deals/:dealId')
   @LoggedInOnly()
   addInterestedDeal(
     @DUser() user: User,
@@ -17,7 +17,7 @@ export class InterestController {
     return this.interestService.addInterestedDeal(user.id, dealId);
   }
 
-  @Delete('deal/:dealId')
+  @Delete('deals/:dealId')
   @LoggedInOnly()
   removeInterestedDeal(
     @DUser() user: User,
