@@ -27,4 +27,12 @@ export class UsersService {
 
     return interestDeals;
   }
+
+  async getUser(email: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: { email },
+    });
+
+    return user;
+  }
 }

@@ -1,4 +1,7 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { LoggedInOnly } from 'src/decorators/loggedInOnly.decorator';
+import { DUser } from 'src/decorators/user.decorator';
 import { UsersLogInDto, UsersSignUpDto } from './auth.dto';
 import { AuthService } from './auth.service';
 
@@ -16,6 +19,14 @@ export class AuthController {
   @Post('log-in')
   async logIn(@Body() dto: UsersLogInDto) {
     const accessToken = await this.authService.logIn(dto);
+
+    return accessToken;
+  }
+
+  @Get('refresh-token')
+  @LoggedInOnly()
+  async refreshToken(@DUser() user: User) {
+    const accessToken = await this.authService.refreshToken(user);
 
     return accessToken;
   }

@@ -48,19 +48,19 @@ model Deal {
 }
 
 model Interest {
-  userId          Int              @id
-  user            User             @relation(fields: [userId], references: [id])
+  userId          String           @id
+  user            User             @relation(fields: [userId], references: [email])
   interestedDeals InterestedDeal[]
 }
 
 model InterestedDeal {
-  id         Int      @id @default(autoincrement())
-  interestId Int
-  interest   Interest @relation(fields: [interestId], references: [userId])
-  dealId     Int
-  deal       Deal     @relation(fields: [dealId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  userId    String
+  interest  Interest @relation(fields: [userId], references: [userId])
+  dealId    Int
+  deal      Deal     @relation(fields: [dealId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@unique([interestId, dealId])
+  @@unique([userId, dealId])
 }

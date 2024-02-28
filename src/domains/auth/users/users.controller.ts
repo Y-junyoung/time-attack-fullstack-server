@@ -19,4 +19,10 @@ export class UsersController {
   async getInterests(@DUser() user: User) {
     return await this.usersService.getInterests(user);
   }
+
+  @Get()
+  @LoggedInOnly()
+  async getUser(@DUser() user: User) {
+    return await this.usersService.getUser(user.email);
+  }
 }

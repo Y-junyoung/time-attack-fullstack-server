@@ -14,3 +14,12 @@ export type PostDealDTO = {
 };
 
 export type UpdateDealDTO = PostDealDTO;
+
+export type UploadImageDTO = {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  buffer: Buffer;
+  size: number;
+};

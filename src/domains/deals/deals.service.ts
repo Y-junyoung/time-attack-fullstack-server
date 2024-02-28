@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Deal, User } from '@prisma/client';
+import { writeFile } from 'fs/promises';
+import { nanoid } from 'nanoid';
+import { join } from 'path';
 import { PrismaService } from 'src/db/prisma/prisma.service';
-import { PostDealDTO, UpdateDealDTO } from './deals.dto';
+import { PostDealDTO, UpdateDealDTO, UploadImageDTO } from './deals.dto';
 
 @Injectable()
 export class DealsService {
@@ -32,13 +35,25 @@ export class DealsService {
   }
 
   async postDeal(dto: PostDealDTO, user: User) {
-    const { title, content, location, price } = dto;
+    const { title, content, location, price, imgSrc } = dto;
     const { email } = user;
     const deal = await this.prismaService.deal.create({
-      data: { title, content, location, price, sellerId: email },
+      data: { title, content, location, price, sellerId: email, imgSrc },
     });
 
     return deal;
+  }
+
+  async uploadImage(dto: UploadImageDTO) {
+    const basePath = join(__dirname, '../../../public/images');
+    const fileNameBase = nanoid();
+    const fileExtension = dto.originalname.split('.').pop();
+    const fileName = `${fileNameBase}.${fileExtension}`;
+    const path = join(basePath, fileName);
+
+    await writeFile(path, dto.buffer);
+
+    return fileName;
   }
 
   async removeDeal(user: User, dealId: number) {

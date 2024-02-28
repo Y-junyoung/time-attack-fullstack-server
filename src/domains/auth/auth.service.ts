@@ -41,12 +41,18 @@ export class AuthService {
     });
     if (!user) throw new NotFoundException('No user found');
 
-    const isCorrectPassword = compare(password, user.encryptedPassword);
+    const isCorrectPassword = await compare(password, user.encryptedPassword);
     if (!isCorrectPassword) throw new BadRequestException('Incorrect password');
 
     const accessToken = this.generateAccessToken(user);
 
     return accessToken;
+  }
+
+  async refreshToken(user: User) {
+    const refreshedAccessToken = this.generateAccessToken(user);
+
+    return refreshedAccessToken;
   }
 
   generateAccessToken(user: Pick<User, 'email'>) {

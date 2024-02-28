@@ -5,21 +5,21 @@ import { PrismaService } from 'src/db/prisma/prisma.service';
 export class InterestService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async addInterestedDeal(userId: number, dealId: number) {
+  async addInterestedDeal(userId: string, dealId: number) {
     if (!dealId) throw new BadRequestException('No deal');
 
     const interestedDeal = await this.prismaService.interestedDeal.create({
-      data: { interestId: userId, dealId },
+      data: { userId, dealId },
     });
 
     return interestedDeal;
   }
 
-  async removeInterestedDeal(userId: number, dealId: number) {
+  async removeInterestedDeal(userId: string, dealId: number) {
     if (!dealId) throw new BadRequestException('No deal');
 
     const interestedDeal = await this.prismaService.interestedDeal.delete({
-      where: { interestId_dealId: { interestId: userId, dealId } },
+      where: { userId_dealId: { userId, dealId } },
     });
 
     return interestedDeal;
