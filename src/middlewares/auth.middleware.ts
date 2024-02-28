@@ -24,7 +24,7 @@ export class AuthMiddleware implements NestMiddleware<Request, Response> {
   ) {
     req.user = null;
 
-    const accessToken = req.headers.authorization?.split('Bearer ')[1];
+    const accessToken = req.cookies.accessToken;
     if (!accessToken) return next();
 
     let email: string;
