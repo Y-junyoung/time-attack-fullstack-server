@@ -14,7 +14,7 @@ export class InterestController {
     @DUser() user: User,
     @Param('dealId', ParseIntPipe) dealId: number,
   ) {
-    return this.interestService.addInterestedDeal(user.email, dealId);
+    return this.interestService.addInterestedDeal(user, dealId);
   }
 
   @Delete('deals/:dealId')
@@ -23,6 +23,6 @@ export class InterestController {
     @DUser() user: User,
     @Param('dealId', ParseIntPipe) dealId: number,
   ) {
-    return this.interestService.removeInterestedDeal(user.email, dealId);
+    return this.interestService.removeInterestedDeal(user, dealId);
   }
 }
