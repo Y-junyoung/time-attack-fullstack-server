@@ -66,11 +66,11 @@ export class DealsService {
   }
 
   async updateDeal(user: User, dealId: number, dto: UpdateDealDTO) {
-    const { title, content, location, price } = dto;
+    const { title, content, location, price, imgSrc } = dto;
     const { email } = user;
     const UpdatedDeal = await this.prismaService.deal.update({
       where: { id: dealId, sellerId: email },
-      data: { title, content, location, price, sellerId: email },
+      data: { title, content, location, price, imgSrc, sellerId: email },
     });
 
     return UpdatedDeal;
