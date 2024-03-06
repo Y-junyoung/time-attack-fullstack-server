@@ -49,7 +49,7 @@ export class DealsService {
     const fileNameBase = nanoid();
     const fileExtension = dto.originalname.split('.').pop();
     const fileName = `${fileNameBase}.${fileExtension}`;
-    const path = join(basePath, fileName);
+    const path = basePath + fileName;
 
     await writeFile(path, dto.buffer);
 
