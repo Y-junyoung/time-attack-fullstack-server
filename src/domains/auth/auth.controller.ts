@@ -19,10 +19,11 @@ export class AuthController {
 
     response.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       maxAge: 1000 * 60 * 20,
-      // domain: '',
+      domain:
+        'port-0-time-attack-fullstack-server-17xco2lltdolap1.sel5.cloudtype.app',
     });
 
     return accessToken;
@@ -37,10 +38,11 @@ export class AuthController {
 
     response.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       maxAge: 1000 * 60 * 20,
-      // domain: '',
+      domain:
+        'port-0-time-attack-fullstack-server-17xco2lltdolap1.sel5.cloudtype.app',
     });
 
     return accessToken;
@@ -49,10 +51,11 @@ export class AuthController {
   @Delete('log-out')
   async logOut(@Res({ passthrough: true }) response: Response) {
     response.clearCookie('accessToken', {
-      // domain: '',
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
+      domain:
+        'port-0-time-attack-fullstack-server-17xco2lltdolap1.sel5.cloudtype.app',
     });
 
     response.json();
@@ -68,10 +71,11 @@ export class AuthController {
 
     response.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       maxAge: 1000 * 60 * 20,
-      // domain: '',
+      domain:
+        'port-0-time-attack-fullstack-server-17xco2lltdolap1.sel5.cloudtype.app',
     });
 
     return accessToken;
