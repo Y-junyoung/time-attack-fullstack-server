@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Post, Res } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { Response } from 'express';
-import { LoggedInOnly } from 'src/decorators/loggedInOnly.decorator';
 import { DUser } from 'src/decorators/user.decorator';
 import { UsersLogInDto, UsersSignUpDto } from './auth.dto';
 import { AuthService } from './auth.service';
@@ -62,11 +61,12 @@ export class AuthController {
   }
 
   @Get('refresh-token')
-  @LoggedInOnly()
   async refreshToken(
     @DUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
+    if (!user) return;
+
     const accessToken = await this.authService.refreshToken(user);
 
     response.cookie('accessToken', accessToken, {
